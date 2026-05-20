@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ranking da Pelada - Sistema de classificação estilo Blue Lock/FIFA para peladas entre amigos">
+  <title>PCD ⚽ Pelada Championship Dashboard</title>
+
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header id="main-header">
+    <div class="header-content">
+      <div class="header-left">
+        <div class="logo-icon">⚽</div>
+        <div class="header-text">
+          <h1 id="league-name">PCD-LOCK</h1>
+          <p class="header-subtitle">DASHBOARD DE RANKING • TEMPORADA 2026</p>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="header-stat">
+          <span class="stat-value" id="total-jogadores">0</span>
+          <span class="stat-label">JOGADORES</span>
+        </div>
+        <div class="header-stat">
+          <span class="stat-value" id="total-jogos">0</span>
+          <span class="stat-label">JOGOS</span>
+        </div>
+        <div class="header-stat">
+          <span class="stat-value" id="total-gols">0</span>
+          <span class="stat-label">GOLS</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+
+    <section id="top3-section">
+      <h2 class="section-title">
+        <span class="title-icon">🏆</span>
+        TOP 3 JOGADORES
+        <span class="title-line"></span>
+      </h2>
+      <div id="top3-cards" class="top3-container">
+  
+      </div>
+    </section>
+
+    <!-- TABELA DE RANKING COMPLETO -->
+    <section id="ranking-section">
+      <h2 class="section-title">
+        <span class="title-icon">📊</span>
+        RANKING COMPLETO
+        <span class="title-line"></span>
+      </h2>
+      <div class="table-wrapper">
+        <table id="ranking-table">
+          <thead>
+            <tr>
+              <th class="col-pos">#</th>
+              <th class="col-trend">▲▼</th>
+              <th class="col-nome">JOGADOR</th>
+              <th class="col-overall">OVR</th>
+              <th class="col-stat">⚽ GOL</th>
+              <th class="col-stat">🅰️ ASS</th>
+              <th class="col-stat">🛡️ DEF</th>
+              <th class="col-stat">🏆 VIT</th>
+              <th class="col-stat">🎮 JGS</th>
+              <th class="col-pts">PTS</th>
+            </tr>
+          </thead>
+          <tbody id="ranking-body">
+            <!-- Linhas geradas via JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- CARDS DE TODOS OS JOGADORES -->
+    <section id="cards-section">
+      <h2 class="section-title">
+        <span class="title-icon">🃏</span>
+        CARDS DOS JOGADORES
+        <span class="title-line"></span>
+      </h2>
+      <div id="player-cards" class="cards-grid">
+        <!-- Cards gerados via JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="main-footer">
+    <p>PCD — Pelada Championship Dashboard © 2026</p>
+    <p class="footer-sub">Feito com ⚡ para a pelada dos cria</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
