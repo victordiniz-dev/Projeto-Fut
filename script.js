@@ -5,15 +5,16 @@
 // Cada jogador é um Objeto que guarda suas informações.
 
 const jogadores = [
-  { nome: "Victor",  gols: 2, assistencias: 0, defesas: 0,  vitorias: 0, jogos: 1},
-  { nome: "Guigo",   gols: 2,  assistencias: 2, defesas: 0,  vitorias: 0, jogos: 1 },
+  { nome: "Victor",  gols: 4, assistencias: 1, defesas: 2,  vitorias: 1, jogos: 3},
+  { nome: "Guigo",   gols: 3,  assistencias: 4, defesas: 0,  vitorias: 2, jogos: 3 },
   { nome: "Gabriel", gols: 0, assistencias: 0, defesas: 0,  vitorias: 0, jogos: 0 },
   { nome: "Fink",  gols: 1,  assistencias: 3, defesas: 0, vitorias: 0, jogos: 1 },
   { nome: "Pedro",   gols: 0,  assistencias: 0, defesas: 0,  vitorias: 0, jogos: 1 },
-  { nome: "Guilherme", gols: 0,  assistencias: 2, defesas: 3,  vitorias: 0, jogos: 1 },
-  { nome: "Henrique",  gols: 1, assistencias: 2, defesas: 0,  vitorias: 0, jogos: 1 },
-  { nome: "Gustavo",    gols: 3,  assistencias: 0, defesas: 0, vitorias: 0, jogos: 1 },
-  { nome: "Flericlis",    gols: 1,  assistencias: 1, defesas: 0, vitorias: 0, jogos: 1 }
+  { nome: "Guilherme", gols: 0,  assistencias: 3, defesas: 3,  vitorias: 0, jogos: 2 },
+  { nome: "Henrique",  gols: 2, assistencias: 3, defesas: 0,  vitorias: 2, jogos: 3 },
+  { nome: "Gustavo",    gols: 4,  assistencias: 0, defesas: 4, vitorias: 1, jogos: 3 },
+  { nome: "Flericlis",    gols: 1,  assistencias: 2, defesas: 3, vitorias: 0, jogos: 3 },
+  {nome: "Davi Barcelos",    gols: 1,  assistencias: 0, defesas: 0, vitorias: 0, jogos: 1 }
 ];
 
 // ============================================
@@ -22,7 +23,7 @@ const jogadores = [
 // OPÇÃO 2: Se quiser editar os totais sem mexer nos jogadores, use essas variáveis
 // Deixe com NULL para calcular automaticamente. Coloque um número para forçar o valor.
 let totalJogadoresFixo = null;  // Deixe NULL para contar automaticamente | Ou coloque um número tipo: 9
-let totalJogosFixo = 1;         // Total de jogos fixo definido para 1
+let totalJogosFixo = 3;         // Total de jogos fixo definido para 3
 let totalGolsFixo = null;       // Deixe NULL para somar automaticamente | Ou coloque um número tipo: 25
 
 
@@ -77,16 +78,27 @@ function calcularPontos(jogador) {
 
 // Função para calcular o Overall (Nível geral) de UM jogador
 function calcularOverall(jogador) {
-  if (jogador.jogos === 0) {
-    return 70; // Se não jogou nada, o overall base é 70
+  // Se não jogou nenhuma partida, o overall base é 70
+  if (!jogador.jogos || jogador.jogos === 0) {
+    return 70; 
   }
 
-  let pontos = calcularPontos(jogador);
-  let mediaPorJogo = pontos / jogador.jogos;
-  let overall = 70 + (mediaPorJogo * 2);
+  // 1. Calcula os pontos totais acumulados na carreira
+  let pontosTotais = calcularPontos(jogador); 
 
-  // Math.round arredonda o número. Ex: 74.28 vira 74.3
-  return Math.round(overall * 10) / 10;
+  if (pontosTotais <= 0) {
+    return 70;
+  }
+
+  // 2. Nova fórmula: O número de jogos (jogador.jogos) agora divide a conta,
+  // servindo como o teste de eficiência que você queria.
+  let contaInterna = (9 * Math.pow(pontosTotais, 2)) / jogador.jogos;
+  let overall = 70 + Math.sqrt(contaInterna);
+
+  // 3. Trava o limite no 100 e arredonda para o inteiro mais próximo
+  let overallFinal = Math.min(Math.round(overall), 100);
+
+  return overallFinal;
 }
 
 // Função que pega a lista de jogadores, calcula tudo e ordena do melhor para o pior
@@ -113,13 +125,22 @@ function prepararRanking() {
   }
 
   // Ordena a lista do maior overall para o menor
+  // Ordena a lista do maior overall para o menor. Se empatar, desempatará por pontos (PTS).
   jogadoresProcessados.sort(function(a, b) {
     if (a.overall > b.overall) {
-      return -1; // 'a' é maior, então vem antes
+      return -1; 
     } else if (a.overall < b.overall) {
-      return 1;  // 'b' é maior, então vem antes
+      return 1;  
     } else {
-      return 0;  // Empate
+      // === CRITÉRIO DE DESEMPATE ===
+      // Se o overall for igual, quem tiver mais PONTOS (PTS) fica na frente
+      if (a.pontos > b.pontos) {
+        return -1;
+      } else if (a.pontos < b.pontos) {
+        return 1;
+      } else {
+        return 0; // Empate absoluto em tudo
+      }
     }
   });
 
